@@ -1,12 +1,24 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
+import cors from 'cors';
 
 const app = express();
-const port = 3001;
+const PORT = process.env.PORT || 5000;
 
-app.get('/', (req, res) => {
-  res.send('Hello from Express!');
+app.use(cors());
+app.use(express.json());
+
+app.get('/api/info', (req: Request, res: Response) => {
+  res.json({ message: 'phone number: 123345' });
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+app.post('/api/message', (req: Request, res: Response) => {
+    const { message } = req.body;
+    res.json({ message });
+})
+app.get('/', (req: Request, res: Response) => {
+  res.json({ message: 'Hello from the backend!' });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
