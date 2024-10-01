@@ -1,25 +1,29 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import cors from 'cors';
+import sequelize from './db';
+import userRoutes from './routes/userRoutes'
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-console.log('Hello from the backend!');
 app.use(cors());
 app.use(express.json());
 
-app.get('/api/info', (req: Request, res: Response) => {
-  res.json({ message: 'phone number: 123345' });
+// Sync the database
+sequelize.sync().then(() => {
+  console.log('Database synced');
 });
 
-app.post('/api/message', (req: Request, res: Response) => {
-    const { message } = req.body;
-    res.json({ message });
-})
-app.get('/', (req: Request, res: Response) => {
+// Use the user routes for /api path
+app.use('/api', userRoutes);
+
+// Root route for health check
+app.get('/', (req, res) => {
   res.json({ message: 'Hello from the backend!' });
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+export default app;

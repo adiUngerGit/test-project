@@ -4,7 +4,8 @@ import { Routes, Route, Link } from 'react-router-dom';
 import Home from './Pages/Home';
 import Contact from './Pages/Contact';
 import Message from './Components/Massage';
-
+import Photos from './Pages/Photos';
+import Login from './Pages/LogIn';
 function App() {
   const pages = [
     {
@@ -17,6 +18,16 @@ function App() {
       path: '/contact',
       component: <Contact />
     },
+    {
+      name: 'Photos',
+      path: '/photos',
+      component: <Photos />
+    },
+    {
+      name: 'Login',
+      path: '/login',
+      component: <Login/>
+    }
   ];
 
   return (
