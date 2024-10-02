@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const db_1 = __importDefault(require("./db"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
+const shoppingRoutes_1 = __importDefault(require("./routes/shoppingRoutes"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
 app.use((0, cors_1.default)());
@@ -17,6 +18,7 @@ db_1.default.sync().then(() => {
 });
 // Use the user routes for /api path
 app.use('/api', userRoutes_1.default);
+app.use('/api', shoppingRoutes_1.default);
 // Root route for health check
 app.get('/', (req, res) => {
     res.json({ message: 'Hello from the backend!' });

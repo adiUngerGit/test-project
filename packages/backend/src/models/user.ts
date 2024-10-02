@@ -3,9 +3,9 @@ import sequelize from '../db';
 
 class User extends Model {
   public id!: number;
-  public username!: string;  // `username`, not `name`
+  public username!: string;  
   public email!: string;
-  public password!: string;  // `password` is required
+  public password!: string;
 }
 
 User.init(
@@ -15,9 +15,9 @@ User.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    username: {  // Change 'name' to 'username' if you're using 'username'
+    username: {  
       type: DataTypes.STRING,
-      allowNull: false,  // Validation requires that username cannot be null
+      allowNull: false,  
     },
     email: {
       type: DataTypes.STRING,
@@ -26,7 +26,7 @@ User.init(
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,  // Validation requires that password cannot be null
+      allowNull: false, 
     },
   },
   {

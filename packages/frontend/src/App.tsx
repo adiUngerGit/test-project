@@ -1,51 +1,64 @@
-import React from 'react';
-import './App.css';
-import { Routes, Route, Link } from 'react-router-dom'; 
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import Home from './Pages/Home';
 import Contact from './Pages/Contact';
-import Message from './Components/Massage';
 import Photos from './Pages/Photos';
 import Login from './Pages/LogIn';
+import SignUp from './Pages/LogIn';
+import ShopingList from './Pages/ShopingList';
+import Cookies from 'js-cookie';
+
 function App() {
-  const pages = [
-    {
-      name:  'Home',
-      path: '/',
-      component: <Home />
-    },
-    {
-      name: 'Contact',
-      path: '/contact',
-      component: <Contact />
-    },
-    {
-      name: 'Photos',
-      path: '/photos',
-      component: <Photos />
-    },
-    {
-      name: 'Login',
-      path: '/login',
-      component: <Login/>
-    }
-  ];
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    Cookies.remove('userId');
+    Cookies.remove('userName');
+    Cookies.remove('userEmail');
+    Cookies.remove('userPassword');
+    setIsLoggedIn(false);
+  };
+
+  
 
   return (
     <div className="App">
-      <ul className="flex">
-        {pages.map((page, index) => (
-          <li className="mr-6" key={index}>
-            <Link className="text-blue-500 hover:text-blue-800" to={page.path}>
-              {page.name}
+      { (
+        <ul className="flex">
+          <li className="mr-6">
+            <Link className="text-blue-500 hover:text-blue-800" to="/">
+              Home
             </Link>
           </li>
-        ))}
-      </ul>
+          <li className="mr-6">
+            <Link className="text-blue-500 hover:text-blue-800" to="/contact">
+              Contact
+            </Link>
+          </li>
+          <li className="mr-6">
+            <Link className="text-blue-500 hover:text-blue-800" to="/photos">
+              Photos
+            </Link>
+            <Link className="text-blue-500 hover:text-blue-800" to="/ShoppingList">
+              Shopping List
+            </Link>
+          </li>
+          <li className="mr-6">
+            <button className="text-red-500 hover:text-red-800" onClick={handleLogout}>
+              Log Out
+            </button>
+          </li>
+        </ul>
+      )}
 
       <Routes>
-        {pages.map((page, index) => (
-          <Route path={page.path} element={page.component} key={index} />
-        ))}
+        <Route path="/shoppinglist" element={<ShopingList />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/photos" element={<Photos />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/SignUp" element={<SignUp />} /> {/* Ensure route matches the Link in Login */}
       </Routes>
     </div>
   );

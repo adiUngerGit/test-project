@@ -3,31 +3,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// models/ShoppingItem.ts
 const sequelize_1 = require("sequelize");
 const db_1 = __importDefault(require("../db"));
-class User extends sequelize_1.Model {
+class ShoppingItem extends sequelize_1.Model {
 }
-User.init({
+ShoppingItem.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
     },
-    username: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
-    email: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-    },
-    password: {
+    name: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
 }, {
     sequelize: db_1.default,
-    modelName: 'User',
+    tableName: 'shopping_items',
 });
-exports.default = User;
+exports.default = ShoppingItem;

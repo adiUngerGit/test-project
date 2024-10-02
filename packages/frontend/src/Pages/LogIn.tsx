@@ -1,32 +1,38 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
       const response = await axios.post('http://localhost:5000/api/login', {
+        username,
         email,
         password,
       });
 
-      const { id, name, email: userEmail } = response.data.user;
-
-      Cookies.set('userId', id, { expires: 1 });  
-      Cookies.set('userName', name, { expires: 1 });
-      Cookies.set('userEmail', userEmail, { expires: 1 });
-
-      console.log('Login successful, user info saved to cookies.');
+      addToCookies(response.data.user.id);
+      // Redirect to home after successful login
+      navigate('/');
     } catch (error) {
       console.error('Error logging in:', error);
     }
   };
-  
+
+  const addToCookies = (id: string) => {
+    Cookies.set('userId', id, { expires: 1 });
+    Cookies.set('userName', username, { expires: 1 });
+    Cookies.set('userEmail', email, { expires: 1 });
+    Cookies.set('userPassword', password, { expires: 1 }); // TODO: hash!!
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -62,6 +68,14 @@ const Login = () => {
             Login
           </button>
         </form>
+
+        {/* Link to Sign Up */}
+        <p className="text-center mt-4">
+          Don't have an account?{' '}
+          <Link to="/SignUp" className="text-blue-500 hover:text-blue-800" > {/* All lowercase */}
+            Sign Up
+          </Link>
+        </p>
       </div>
     </div>
   );
