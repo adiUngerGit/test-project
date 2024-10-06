@@ -4,7 +4,7 @@
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node dist/index.js",
-      "dev": "ts-node-dev src/index.ts",
+    "dev": "ts-node-dev src/index.ts",
     "deSELECT * FROM usersv": "ts-node-dev src/index.ts"
   },
   "dependencies": {
