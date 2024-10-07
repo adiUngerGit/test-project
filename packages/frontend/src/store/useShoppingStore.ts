@@ -34,7 +34,7 @@ export const useShoppingStore = create<ShoppingStore>((set) => ({
   },
   removeItem: async (id: number) => {
     try {
-      await axios.delete(`http://localhost:5000/items/${id}`);
+      await axios.delete(`http://localhost:5000/api/items/${id}`);
       set((state) => ({
         items: state.items.filter((item) => item.id !== id),
       }));

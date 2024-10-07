@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addUser, loginUser } from '../controlles/userController';
+import { addUser, editUser, loginUser } from '../controlles/userController';
 
 const router = Router();
 
@@ -8,5 +8,7 @@ router.post('/addUser', addUser);
 
 // Route for user login
 router.post('/login', loginUser);
+
+router.put('/editUser/:id', editUser);
 
 export default router;

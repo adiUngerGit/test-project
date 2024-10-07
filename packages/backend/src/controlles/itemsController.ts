@@ -26,6 +26,7 @@ export const getItems = async (req: Request, res: Response) => {
 
 // Remove an item
 export const removeItem = async (req: Request, res: Response) => {
+  console.log(req.params+"hii from remove item");
   try {
     const { id } = req.params;
     const item = await ShoppingItem.findByPk(id);

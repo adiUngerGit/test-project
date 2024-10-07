@@ -20,8 +20,39 @@ export const addUser = async (req: Request, res: Response) => {
       res.status(500).json({ error: 'Failed to create user' });
     }
   };
-// Controller for login
-export const loginUser = async (req: Request, res: Response) => {
+
+ 
+export const editUser = async (req: Request, res: Response) => {
+  try {
+      const { id } = req.params;
+      const { username, email, password } = req.body;
+
+      if (!username && !email && !password) {
+          return res.status(400).json({ error: 'At least one field (username, email, or password) is required for update' });
+      }
+
+      const user = await User.findByPk(id);
+      if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+      }
+
+      if (username) user.username = username;
+      if (email) user.email = email;
+      if (password) user.password = password;
+
+      await user.save();
+
+      res.status(200).json({
+          id: user.id,
+          username: user.username,
+          email: user.email,
+      });
+  } catch (error) {
+      console.error('Error updating user:', error);
+      res.status(500).json({ error: 'Failed to update user' });
+  }
+};
+  export const loginUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
@@ -42,7 +73,7 @@ export const loginUser = async (req: Request, res: Response) => {
       message: 'Login successful',
       user: {
         id: user.id,
-        name: user.username,
+        username: user.username,
         email: user.email,
       },
     });
