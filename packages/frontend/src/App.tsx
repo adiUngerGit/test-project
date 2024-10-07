@@ -10,17 +10,18 @@ import Cookies from 'js-cookie';
 import {useUser} from './store/useUser';
 
 function App() {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const {isLoggedIn, setIsLoggedIn} = useUser();
 
   useEffect(() => {
-    if (isLoggedIn) {
+    console.log(Cookies.get('userId'));
+    if (Cookies.get('userId')) {
+      setIsLoggedIn(true);
       navigate('/');
     } else {
-      navigate('/login'); 
+     navigate('/login'); 
     }
-  }, []);
+  }, [isLoggedIn]);
 
   const handleLogout = () => {
     Cookies.remove('userId');
@@ -67,7 +68,6 @@ function App() {
 
       <Routes>
         <Route path="/" element={isLoggedIn ? <Home /> : <Navigate to="/login" />} />
-
         <Route path="/contact" element={isLoggedIn ? <Contact /> : <Navigate to="/login" />} />
         <Route path="/photos" element={isLoggedIn ? <Photos /> : <Navigate to="/login" />} />
         <Route path="/shoppinglist" element={isLoggedIn ? <ShoppingList /> : <Navigate to="/login" />} />

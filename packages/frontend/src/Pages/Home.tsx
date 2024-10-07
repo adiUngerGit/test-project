@@ -8,7 +8,7 @@ const Home: React.FC = () => {
   const editDB = async () => {
     console.log(user)
     try {
-      const response = await axios.put(`http://your-api-url.com/users/${user.id}`, user);
+      const response = await axios.put(`http://localhost:5000/api/editUser/${user.id}`, user);
       
       console.log('User updated successfully:', response.data);
       
