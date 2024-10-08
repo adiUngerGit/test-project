@@ -1,6 +1,7 @@
 // components/ShoppingList.tsx
 import React, { useState, useEffect } from 'react';
 import { useShoppingStore, ShoppingItem } from '../store/useShoppingStore';
+import Button from '../Components/Button';
 
 const ShoppingList: React.FC = () => {
   const [newItem, setNewItem] = useState<string>('');
@@ -29,12 +30,8 @@ const ShoppingList: React.FC = () => {
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter item name"
           />
-          <button
-            onClick={handleAddItem}
-            className="w-full bg-blue-500 text-white py-2 mt-2 rounded-lg hover:bg-blue-600 transition duration-300"
-          >
-            Add Item
-          </button>
+          
+            <Button primary={true} label="Add Item" onClick={handleAddItem}/>
         </div>
 
         <ul className="space-y-2">

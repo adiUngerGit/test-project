@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import User from '../models/user';
 export const addUser = async (req: Request, res: Response) => {
     try {
-      const { username, email, password } = req.body;  // Include password in the body
+      const { username, email, password } = req.body;  
   
-      if (!username || !email || !password) {  // Check that password is not missing
+      if (!username || !email || !password) {  
         return res.status(400).json({ error: 'All fields (username, email, password) are required' });
       }
   

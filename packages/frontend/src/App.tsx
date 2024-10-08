@@ -3,11 +3,12 @@ import { Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom';
 import Home from './Pages/Home';
 import Contact from './Pages/Contact';
 import Photos from './Pages/UploudImage';
-import Login from './Pages/LogIn';  // Correct path for the Login component
-import SignUp from './Pages/SignUp'; // Correct path for the SignUp component
+import Login from './Pages/LogIn';  
+import SignUp from './Pages/SignUp'; 
 import ShoppingList from './Pages/ShopingList';
 import Cookies from 'js-cookie';
 import {useUser} from './store/useUser';
+import ItemListPage from './Pages/ItemListPage';
 
 function App() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function App() {
       setIsLoggedIn(true);
       navigate('/');
     } else {
+      setIsLoggedIn(false);
      navigate('/login'); 
     }
   }, [isLoggedIn]);
@@ -51,6 +53,12 @@ function App() {
               <Link className="text-blue-500 hover:text-blue-800" to="/photos">
                 Photos
               </Link>
+              
+            </li>
+            <li className="mr-6">
+              <Link className="text-blue-500 hover:text-blue-800" to="/items">
+                Items
+              </Link>
             </li>
             <li className="mr-6">
               <Link className="text-blue-500 hover:text-blue-800" to="/shoppinglist">
@@ -71,6 +79,7 @@ function App() {
         <Route path="/contact" element={isLoggedIn ? <Contact /> : <Navigate to="/login" />} />
         <Route path="/photos" element={isLoggedIn ? <Photos /> : <Navigate to="/login" />} />
         <Route path="/shoppinglist" element={isLoggedIn ? <ShoppingList /> : <Navigate to="/login" />} />
+        <Route path="/items" element={isLoggedIn ? <ItemListPage /> : <Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
       </Routes>

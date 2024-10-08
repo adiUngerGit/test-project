@@ -7,7 +7,8 @@ export interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ label, primary = false, onClick }) => {
-  const className = primary ? 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' : 'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded';
+  let className = primary ? 'bg-blue-500 hover:bg-red-700 text-black font-bold py-2 px-4 rounded' : 'bg-red-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded';
+  className = className+' w-full';
   return (
     <button onClick={onClick} className={className}>
       {label}

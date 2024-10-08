@@ -29,3 +29,10 @@ Clickable.args = {
   label: 'Click Me!',
   primary: true,
 };
+
+export const blue = Template.bind({})
+
+blue.args = {
+  label: 'Blue Button',
+  primary: true,
+}
