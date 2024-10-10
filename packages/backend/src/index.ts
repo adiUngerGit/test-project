@@ -4,7 +4,6 @@ import sequelize from './db';
 import userRoutes from './routes/userRoutes'
 import shoppingRoutes from './routes/shoppingRoutes'
 import itemRouts from './routes/itemRoutes'
-// import photosRoutes from './routes/photosRouts'
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,11 +21,9 @@ app.use('/api', userRoutes);
 app.use('/api', shoppingRoutes);
 app.use('/api', itemRouts);
 
-// app.use('/api', photoRoutes);
-
 
 // Root route for health check
-app.get('/', (req, res) => {
+app.get('/healthcheck', (req, res) => {
   res.json({ message: 'Hello from the backend!' });
 });
 

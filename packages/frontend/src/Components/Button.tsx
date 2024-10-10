@@ -2,15 +2,30 @@ import React from 'react';
 
 export interface ButtonProps {
   label: string;
-  primary?: boolean;
-  onClick?: () => void;
+  type?: 'long' | 'short' | 'none-bg';
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const Button: React.FC<ButtonProps> = ({ label, primary = false, onClick }) => {
-  let className = primary ? 'bg-blue-500 hover:bg-red-700 text-black font-bold py-2 px-4 rounded' : 'bg-red-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded';
-  className = className+' w-full';
+// Helper function for setting the class based on the type
+const styledButton = (type: 'long' | 'short' | 'none-bg' | undefined) => {
+  switch (type) {
+    case 'long':
+      return 'bg-blue-500 hover:bg-blue-600 w-full';
+    case 'short':
+      return 'bg-green-500 hover:bg-green-600 vertical-center horizontal-center';
+    case 'none-bg':
+      return 'text-blue-500 hover:text-blue-600';
+    default:
+      return '';
+  }
+};
+
+const Button: React.FC<ButtonProps> = ({ label, onClick, type }) => {
   return (
-    <button onClick={onClick} className={className}>
+    <button
+      className={`font-bold py-2 px-4 rounded ${styledButton(type)}`} 
+      onClick={onClick}
+    >
       {label}
     </button>
   );

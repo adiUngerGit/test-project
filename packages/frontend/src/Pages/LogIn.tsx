@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import {Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { sign } from 'crypto';
 import { useUser } from '../store/useUser';
+import InputComponent from '../Components/InputComponent';
+import Title from '../Components/Title'
+import Button from '../Components/Button';
+import Error from '../Components/Error';
+import Form from '../Components/Form';
 
 const Login = () => {
   const { setUser,setIsLoggedIn } = useUser();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');  // State for handling errors
+  const [error, setError] = useState('');  
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -23,7 +27,7 @@ const Login = () => {
       });
       console.log(response.data)
       const {id, username} = response.data.user
-        addToCookies(id);
+        addToCookies(id,username);
         setUser({id,username, email, password});
         setIsLoggedIn(true);
         navigate('/');
@@ -34,66 +38,24 @@ const Login = () => {
     }
   };
 
-  const addToCookies = (id: string) => {
+  const addToCookies = (id: string,username: string) => {
     Cookies.set('userId', id, { expires: 1 });
+    Cookies.set('userName',username, { expires: 1 });
     Cookies.set('userEmail', email, { expires: 1 });
     Cookies.set('userPassword', password, { expires: 1 }); // TODO: hash!!
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        
-        {error && <p className="text-red-500 text-center">{error}</p>} {/* Display error message */}
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="email" className="block text-gray-700">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-gray-700">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-              required
-            />
-          </div>
-          <button onClick={handleSubmit}
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
-          >
-            Login
-          </button>
-        </form>
-
-        {/* Link to Sign Up */}
-        <p className="text-center mt-4">
-          Don't have an account?{' '}
-          <button
-  onClick={(e) => {
-    e.preventDefault();  
-    navigate('/signup');
-  }}
-  className="text-blue-500 hover:text-blue-800"
->
-  Sign Up
-</button>
-        </p>
-      </div>
-    </div>
+    <div className='min-h-screen bg-gray-100 flex justify-center items-center'>
+    <Form >
+    <Title title="Log In"/>
+   {error && <Error message={error} />}
+       <InputComponent type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+       <InputComponent type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+       <Button type='long' onClick={handleSubmit} label="Log In" ></Button>       
+       <p className='text-center text-color:blue pt-2 hover:red'>Dont have an account? <Link to="/signup" className='text-color:blue hover:text-color:red'>Sign Up</Link></p>
+       </Form>
+   </div>
   );
 };
-
 export default Login;

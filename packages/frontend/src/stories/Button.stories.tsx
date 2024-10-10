@@ -1,38 +1,42 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 import Button, { ButtonProps } from '../Components/Button';
+// Button.stories.tsx
 
+
+// Meta configuration for Storybook
 export default {
-  title: 'Example/Button',
+  title: 'Components/Button',
   component: Button,
   argTypes: {
-    onClick: { action: 'clicked' },
+    type: {
+      control: 'select',
+      options: ['long', 'short', 'none-bg'],
+    },
   },
-} as Meta;
+} as Meta<typeof Button>;
 
-const Template: StoryFn<ButtonProps> = (args) => <Button {...args} />;
+const Template: StoryFn<typeof Button> = (args: ButtonProps) => <Button {...args} />;
 
-export const Primary = Template.bind({});
-Primary.args = {
-  label: 'Primary Button',
-  primary: true,
+export const LongButton = Template.bind({});
+LongButton.args = {
+  label: 'Long Button',
+  type: 'long',
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  label: 'Secondary Button',
-  primary: false,
+export const ShortButton = Template.bind({});
+ShortButton.args = {
+  label: 'Short Button',
+  type: 'short',
 };
 
-export const Clickable = Template.bind({});
-Clickable.args = {
-  label: 'Click Me!',
-  primary: true,
+export const NoneBgButton = Template.bind({});
+NoneBgButton.args = {
+  label: 'No Background',
+  type: 'none-bg',
 };
 
-export const blue = Template.bind({})
-
-blue.args = {
-  label: 'Blue Button',
-  primary: true,
-}
+export const DefaultButton = Template.bind({});
+DefaultButton.args = {
+  label: 'Default Button',
+};

@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.112",
@@ -15,15 +15,14 @@
     "postcss": "^8.4.47",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
     "tailwindcss": "^3.4.13",
-    "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "start": "react-scripts start",
     "dev": "npm run dev --prefix frontend",
     "storybook": "storybook dev -p 6006",
@@ -54,6 +53,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/preset-env": "^7.25.7",
+    "@babel/preset-typescript": "^7.25.7",
     "@chromatic-com/storybook": "^1.9.0",
     "@storybook/addon-essentials": "^8.3.5",
     "@storybook/addon-interactions": "^8.3.5",
@@ -65,10 +66,16 @@
     "@storybook/react-webpack5": "^8.3.5",
     "@storybook/test": "^8.3.5",
     "@types/cors": "^2.8.17",
+    "babel-jest": "^29.7.0",
     "eslint-plugin-storybook": "^0.9.0",
+    "jest": "^29.7.0",
     "prop-types": "^15.8.1",
     "storybook": "^8.3.5",
-    "typescript": "^4.x.x",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.6.3",
     "webpack": "^5.95.0"
-  }
+  },
+  "presets": [
+    "@babel/preset-env"
+  ]
 }

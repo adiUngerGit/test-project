@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Home from './Pages/Home';
 import Contact from './Pages/Contact';
-import Photos from './Pages/UploudImage';
 import Login from './Pages/LogIn';  
 import SignUp from './Pages/SignUp'; 
 import ShoppingList from './Pages/ShopingList';
 import Cookies from 'js-cookie';
 import {useUser} from './store/useUser';
 import ItemListPage from './Pages/ItemListPage';
+import Profile from './Pages/Profile';
+import BarItem from './Components/BarItem';
+import ProtectedRoute from './utils/ProtectedRoute';
 
 function App() {
   const navigate = useNavigate();
@@ -27,7 +29,7 @@ function App() {
 
   const handleLogout = () => {
     Cookies.remove('userId');
-    Cookies.remove('userName');
+    Cookies.remove('username');
     Cookies.remove('userEmail');
     Cookies.remove('userPassword');
     setIsLoggedIn(false);
@@ -38,51 +40,34 @@ function App() {
     <div className="App">
       <nav>
         {isLoggedIn && (
-          <ul className="flex">
-            <li className="mr-6">
-              <Link className="text-blue-500 hover:text-blue-800" to="/">
-                Home
-              </Link>
-            </li>
-            <li className="mr-6">
-              <Link className="text-blue-500 hover:text-blue-800" to="/contact">
-                Contact
-              </Link>
-            </li>
-            <li className="mr-6">
-              <Link className="text-blue-500 hover:text-blue-800" to="/photos">
-                Photos
-              </Link>
-              
-            </li>
-            <li className="mr-6">
-              <Link className="text-blue-500 hover:text-blue-800" to="/items">
-                Items
-              </Link>
-            </li>
-            <li className="mr-6">
-              <Link className="text-blue-500 hover:text-blue-800" to="/shoppinglist">
-                Shopping List
-              </Link>
-            </li>
-            <li className="mr-6">
-              <button className="text-red-500 hover:text-red-800" onClick={handleLogout}>
-                Log Out
-              </button>
-            </li>
+        <ul>
+          <BarItem title="Home" to="/"/>
+          <BarItem title="Profile" to="/profile"/>
+          <BarItem title="Contact" to="/contact"/>
+          <BarItem title="Photos" to="/photos"/>
+          <BarItem title="Shopping List" to="/shoppinglist"/>
+          <BarItem title="Items" to="/items"/>
+          <BarItem logOut={true} title="Logout" to="/login" onClick={handleLogout}/>
           </ul>
+
+          
+
         )}
       </nav>
 
       <Routes>
-        <Route path="/" element={isLoggedIn ? <Home /> : <Navigate to="/login" />} />
-        <Route path="/contact" element={isLoggedIn ? <Contact /> : <Navigate to="/login" />} />
-        <Route path="/photos" element={isLoggedIn ? <Photos /> : <Navigate to="/login" />} />
-        <Route path="/shoppinglist" element={isLoggedIn ? <ShoppingList /> : <Navigate to="/login" />} />
-        <Route path="/items" element={isLoggedIn ? <ItemListPage /> : <Navigate to="/login" />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-      </Routes>
+      <Route element={<ProtectedRoute isAuthenticated={isLoggedIn} />}>
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/shoppinglist" element={<ShoppingList />} />
+        <Route path="/items" element={<ItemListPage />} />
+      </Route>
+
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+
+    </Routes>
     </div>
   );
 }

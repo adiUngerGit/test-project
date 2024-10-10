@@ -1,14 +1,13 @@
-import type { Preview } from "@storybook/react";
+// .storybook/preview.js
 
-const preview: Preview = {
-  parameters: {
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
+import '../src/index.css'; // Path to your Tailwind CSS file
+
+export const parameters = {
+  actions: { argTypesRegex: '^on[A-Z].*' },
+  controls: {
+    matchers: {
+      color: /(background|color)$/i,
+      date: /Date$/,
     },
   },
 };
-
-export default preview;

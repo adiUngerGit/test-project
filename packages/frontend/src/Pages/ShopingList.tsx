@@ -31,7 +31,7 @@ const ShoppingList: React.FC = () => {
             placeholder="Enter item name"
           />
           
-            <Button primary={true} label="Add Item" onClick={handleAddItem}/>
+            <Button type={'short'} label="Add Item" onClick={handleAddItem}/>
         </div>
 
         <ul className="space-y-2">
